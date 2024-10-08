@@ -1,0 +1,2 @@
+# UnityUIAdaptScreenTool
+设计一个工具或者脚本，在创建UI时能直接根据需求创建好对应大小的UI，不需要再手动调整每个UI的大小
