@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:TextField picking-mode="Ignore" label="Name" name="Name" />
+    <ui:VisualElement name="Contanier" style="flex-grow: 1; flex-direction: column; background-color: rgb(67, 67, 67); min-width: auto; min-height: auto;">
+        <ui:Vector2Field label="OriginScreenSize" name="OriginScreenSize" />
+        <ui:Vector2Field label="OriginUISize" name="OriginUISize" />
+        <ui:Vector2Field label="CurrentScreenSize" name="CurrentScreenSize" />
+        <uie:ObjectField label="Sprite" type="UnityEngine.Sprite, UnityEngine.CoreModule" name="Sprite" />
+        <ui:Button text="Create" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreateButton" />
+    </ui:VisualElement>
+</ui:UXML>
