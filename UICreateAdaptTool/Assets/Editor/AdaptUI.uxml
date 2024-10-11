@@ -1,10 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <ui:TextField picking-mode="Ignore" label="Name" name="Name" />
+    <ui:TextField picking-mode="Ignore" label="Name" name="Name" tooltip="New gameObject name" />
     <ui:VisualElement name="Contanier" style="flex-grow: 1; flex-direction: column; background-color: rgb(67, 67, 67); min-width: auto; min-height: auto;">
-        <ui:Vector2Field label="OriginScreenSize" name="OriginScreenSize" />
-        <ui:Vector2Field label="OriginUISize" name="OriginUISize" />
-        <ui:Vector2Field label="CurrentScreenSize" name="CurrentScreenSize" />
-        <uie:ObjectField label="Sprite" type="UnityEngine.Sprite, UnityEngine.CoreModule" name="Sprite" />
-        <ui:Button text="Create" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreateButton" />
+        <ui:Vector2Field label="OriginScreenSize" name="OriginScreenSize" tooltip="Screen size in figma or any others." />
+        <ui:TextField label="OriginUICSS" password="false" name="OriginUICSS" focusable="true" picking-mode="Ignore" max-length="-1" auto-correction="true" tooltip="If you input this, you don&apos;t need input OriginUISize;" style="height: auto; display: flex;" />
+        <ui:Vector2Field label="OriginUISize" name="OriginUISize" tooltip="If this value is empty, it will use Sprite size rect as value" focusable="true" />
+        <ui:Vector2Field label="CurrentScreenSize" name="CurrentScreenSize" tooltip="Current game screen size." />
+        <uie:ObjectField label="Sprite" type="UnityEngine.Sprite, UnityEngine.CoreModule" name="Sprite" tooltip="Make sure Sprite Mesh Type is &apos;Full Rect&apos;" />
+        <ui:Button text="Create" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreateButton" tooltip="create  GameObject" />
     </ui:VisualElement>
 </ui:UXML>

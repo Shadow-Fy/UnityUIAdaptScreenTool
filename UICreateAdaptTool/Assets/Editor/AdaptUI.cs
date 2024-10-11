@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEditor.UIElements;
@@ -37,26 +38,55 @@ public class AdaptUI : EditorWindow
         Vector2Field originUISize = labelFromUXML.Q<Vector2Field>("OriginUISize");
         Vector2Field currentScreenSize = labelFromUXML.Q<Vector2Field>("CurrentScreenSize");
         TextField name = labelFromUXML.Q<TextField>("Name");
+        TextField originUICSS = labelFromUXML.Q<TextField>("OriginUICSS");
         Button createButton = labelFromUXML.Q<Button>("CreateButton");
-        ObjectField sprite = labelFromUXML.Q<ObjectField>("Sprite");
+        ObjectField spriteField = labelFromUXML.Q<ObjectField>("Sprite");
+        originScreenSize.value = new Vector2(393, 852);
+        currentScreenSize.value = new Vector2(720, 1280);
+        name.value = "<---empty--->";
+
 
         createButton.RegisterCallback<ClickEvent>(evt =>
         {
-            CreateNewGameObject(sprite.value as Sprite,
-                calCurrentUISize(originScreenSize.value, currentScreenSize.value, originUISize.value), name.value);
+            Vector2 originUIVector2;
+            string css = originUICSS.value;
+            if (css != "")
+            {
+                int width = 1, height = 1;
+                Regex regex = new Regex(@"(?<=width:\s)\d+(?=px)");
+                Match widthMatch = regex.Match(css);
+                if (widthMatch.Success)
+                {
+                    width = Int32.Parse(widthMatch.Value);
+                }
+
+                regex = new Regex(@"(?<=height:\s)\d+(?=px)");
+                Match heightMatch = regex.Match(css);
+                if (heightMatch.Success)
+                {
+                    height = Int32.Parse(heightMatch.Value);
+                }
+
+                originUIVector2 = new Vector2(width, height);
+            }
+            else
+            {
+                originUIVector2 = originUISize.value;
+            }
+
+            CreateNewGameObject(spriteField.value as Sprite, 
+                calCurrentUISize(originScreenSize.value, currentScreenSize.value, originUIVector2), name.value);
         });
     }
 
     private void CreateNewGameObject(Sprite sprite, Vector2 size, string name)
     {
         Transform parentTransform = Selection.activeTransform;
-        Debug.Log(EditorSceneManager.IsPreviewSceneObject(parentTransform));
-
 
         GameObject item = new GameObject();
         if (name == "")
         {
-            name = "empty";
+            name = "<---empty--->";
             Debug.LogWarning("you didn't set GameObject's name");
         }
 
@@ -73,8 +103,8 @@ public class AdaptUI : EditorWindow
         {
             Debug.LogWarning("you didn't select a parent GameObject");
         }
-
-        item.transform.localPosition = new Vector3(88,88,88);
+        // 在预制体中用代码生成的GameObject不会被unity判断为修改（导致无法保存），所以刻意将位置设置为一个其他数值，需要手动调整位置来使得unity自动保存修改
+        item.transform.localPosition = new Vector3(88, 88, 88);
     }
 
     // 计算sprite实际的Size应该为多少
